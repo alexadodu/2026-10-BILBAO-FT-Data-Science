@@ -33,7 +33,7 @@ Enlace al repositorio GitHub:
 El codigo deberá seguir la siguiente estructura de carpetas:
 
 1. src/: aquí irá todo el código
-2. src/data: todos los archivos de datos utilizados en el analisis. No subir a GitHub archivos demasiado pesados.
+2. src/data: todos los archivos de datos utilizados en el analisis. No subir a GitHub archivos demasiado pesados. Si eso, subidos a Google Drive y compartir enlace (por si cambian los datos del enlace público).
 3. src/notebooks: los notebooks usados para pruebas (si los hay).
 4. src/utils: todos los modulos y funciones auxiliares creados para el desarrollo del proyecto (si los hay).
 5. src/main.ipynb: en este notebook tendrás que resumir todos los pasos de la analítica..
@@ -42,11 +42,15 @@ El codigo deberá seguir la siguiente estructura de carpetas:
 
 ## Presentación
 
+***Jueves 12 noviembre 2026.***
+
 Puesto que en la vida real la mayoría de presentaciones se realizan a un público no técnico, ésta no va a ser menos. Si tienes que explicar algo técnico, cuéntalo, pero para alguien que no sabe lo que significa. Por ejemplo, ¿cómo contarías qué es una matriz de correlación? No queremos ver código, ni cómo estructuraste el proyecto en carpetas, ni cómo de difícil ha sido limpiarlo. Al cliente/tu jefe le da igual :). Explicar cosas técnicas lleva tiempo por lo que piensa muy bien en lo que vas a decir y en cómo lo sintetizarás.
+
+Recomendación: mejor no poner boxplots, porque se pierde tiempo explicando qué señalan.
 
 Tendrás que exponer bien tu caso de uso (~30% del tiempo), explicar qué es lo que has hecho para resolverlo (~50%), y acabar la presentación con unas conclusiones y oportunidades que nos brinda el proyecto (~20%), para cerrar el plantemiento inicial del caso de uso. **Los % son orientativos...**
 
-**¿Formatos de la presentación?** Nada de Notebooks, ni informes en pdf o HTML. Formato presentación en PowerPoint, Prezi o la plataforma que mejor conozcas, siendo perfectamente combinable con un dashboard desarrollado mediante alguna de las herramientas aprendidas durante el curso.
+**¿Formatos de la presentación?** Nada de Notebooks, ni informes en pdf o HTML.Nada de decir si te ha resultado difícil limpiar la data. Formato presentación en PowerPoint, Prezi o la plataforma que mejor conozcas, siendo perfectamente combinable con un dashboard desarrollado mediante alguna de las herramientas aprendidas durante el curso.
 
 **Consejos**: Si usas un PowerPoint... será tu apoyo a la hora de presentar, aquí el protagonista es tu discurso. Por favor, que la presentación no sea un conjunto de puntos inconexos. Intenta llevar un hilo, como si de una historia se tratase. Véndete, destaca las fortalezas de tu trabajo sobre las debilidades. Interactúa con el público. Si vas a contar algo de negocio, ¿puedes traducirlo a números? ¿Qué impacto tendrá tu analítica?. Muestra algunos datos concretos (estadísticos simples) para justificar tu business case o para cerrar tu presentación. Si has elegido una temática que está acorde con tus gustos/background, aprovecha al principio para contarlo y empatizar mucho más con el público. Si vas a hacer una demo, grábala por si te falla algo en la presentación (conexión a Internet). Prepárate las respuestas a algunas posibles preguntas en un anexo de la presentación.
 
