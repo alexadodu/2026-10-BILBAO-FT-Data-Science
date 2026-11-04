@@ -1,0 +1,153 @@
+-- 1. Clientes de Brazil
+SELECT *
+FROM customers
+WHERE Country = "Brazil";
+
+-- 2. Empleados que son agentes de ventas
+SELECT *
+FROM employees
+WHERE Title = "Sales Support Agent";
+
+-- 3. Las canciones de AC/DC
+SELECT *
+FROM tracks
+JOIN albums on tracks.AlbumId = albums.AlbumId
+JOIN artists on albums.ArtistId = artists.ArtistId
+WHERE artists.Name = "AC/DC";
+
+-- 4. Campos de los clientes que no sean de USA: Nombre completo, ID, País
+SELECT customers.FirstName, customers.LastName, customers.CustomerId, customers.Country
+FROM customers
+WHERE customers.Country <> "USA";
+
+-- 5. Empleados que son agentes de ventas: Nombre completo, Dirección (Ciudad, Estado, País) y email
+SELECT LastName, FirstName, Address, City, State, Country, Email
+FROM employees
+WHERE Title = "Sales Support Agent";
+
+-- 6. Lista con los países no repetidos a los que se han emitido facturas
+SELECT DISTINCT invoices.BillingCountry
+FROM invoices;
+
+-- 7. Lista con los estados de USA no repetidos de donde son los clientes y cuántos clientes en cada uno
+SELECT State, COUNT(CustomerId)
+FROM customers
+WHERE Country = "USA"
+GROUP BY State;
+
+-- 8. ¿Cuántos artículos tiene la factura 37?
+SELECT SUM(Quantity)
+FROM invoice_items
+WHERE InvoiceId = 37;
+
+-- 9. Cuántas canciones tiene ‘AC/DC’
+SELECT COUNT(*)
+FROM tracks
+JOIN albums on tracks.AlbumId = albums.AlbumId
+JOIN artists on albums.ArtistId = artists.ArtistId
+WHERE artists.Name = "AC/DC";
+
+-- 10. Cuántos artículos tiene cada factura
+SELECT InvoiceId, SUM(Quantity)
+FROM invoice_items
+GROUP BY InvoiceId;
+
+-- 11. Cuántas facturas hay de cada país
+SELECT invoices.BillingCountry, COUNT(invoices.InvoiceId)
+FROM invoices
+GROUP BY invoices.BillingCountry;
+
+-- 12. Cuántas facturas ha habido en 2009 y 2011
+SELECT COUNT(invoices.InvoiceId)
+FROM invoices
+WHERE invoices.InvoiceDate LIKE "%2009%" OR invoices.InvoiceDate LIKE "%2011%";
+
+-- puede ser que en los milisegundos haya un 2009 o 2011, así que mejor esta opción:
+SELECT COUNT(invoices.InvoiceId)
+FROM invoices
+WHERE strftime("%Y", InvoiceDate) = "2009" OR strftime("%Y", InvoiceDate) = "2011";
+
+-- 13. Cuántas facturas ha habido entre 2009 y 2011
+SELECT COUNT(invoices.InvoiceId)
+FROM invoices
+WHERE invoices.InvoiceDate BETWEEN "2009-01-01" AND "2011-12-31";
+
+SELECT COUNT(i.InvoiceId)
+FROM invoices i
+WHERE i.InvoiceDate BETWEEN "2009-01-01" AND "2011-12-31";
+
+-- 14. Cuántas clientes hay de España y de Brasil
+SELECT COUNT(customers.CustomerId)
+FROM customers
+WHERE Country = "Spain" OR Country = "Brazil";
+
+-- 15. Obtén las canciones que su título empieza por ‘You’
+SELECT Name
+FROM tracks
+WHERE Name LIKE "You%";
+
+-- *** SEGUNDA PARTE ***
+-- 1. Facturas de Clientes de Brasil, Nombre del cliente, Id de factura, fecha de la factura y el país de la factura
+SELECT customers.FirstName, customers.LastName, invoices.InvoiceId, invoices.InvoiceDate, invoices.BillingCountry
+FROM customers
+JOIN invoices on invoices.CustomerId = customers.CustomerId
+WHERE customers.Country = "Brazil";
+
+-- 2. Obtén cada factura asociada a cada agente de ventas con su nombre completo
+SELECT invoices.InvoiceId, employees.FirstName, employees.LastName
+FROM employees
+JOIN customers on employees.EmployeeId = customers.SupportRepId
+JOIN invoices on customers.CustomerId = invoices.CustomerId;
+
+-- 3. Obtén el nombre del cliente, el país, el nombre del agente y el total
+SELECT customers.FirstName, customers.LastName, customers.Country, employees.FirstName, employees.LastName, invoices.Total
+FROM employees
+JOIN customers on employees.EmployeeId = customers.SupportRepId
+JOIN invoices on customers.CustomerId = invoices.CustomerId;
+
+-- 4. Obtén cada artículo de la factura con el nombre de la canción
+SELECT invoices.InvoiceId , tracks.Name
+FROM tracks
+JOIN invoice_items on tracks.TrackId = invoice_items.TrackId
+JOIN invoices on invoice_items.InvoiceId = invoices.InvoiceId;
+
+-- 5. Muestra todas las canciones con su nombre, formato, álbum y género
+SELECT tracks.Name AS "Song", media_types.Name AS "Media type", albums.Title AS "Album", genres.Name AS "Genre"
+FROM tracks
+JOIN albums on albums.AlbumId = tracks.AlbumId
+JOIN media_types on media_types.MediaTypeId = tracks.MediaTypeId
+JOIN genres on genres.GenreId = tracks.GenreId;
+
+-- 6. Cuántas canciones hay en cada playlist
+SELECT playlists.Name, COUNT(playlist_track.TrackId)
+FROM playlist_track
+JOIN playlists on playlist_track.PlaylistId = playlists.PlaylistId
+GROUP BY playlists.PlaylistId;
+
+-- 7. Cuánto ha vendido cada empleado
+SELECT employees.FirstName, employees.LastName, SUM(invoices.Total)
+FROM employees
+JOIN customers on employees.EmployeeId = customers.SupportRepId
+JOIN invoices on customers.CustomerId = invoices.CustomerId
+GROUP BY employees.EmployeeId;
+
+-- 8. ¿Quién ha sido el agente de ventas que más ha vendido en 2009?
+SELECT employees.FirstName, employees.LastName, SUM(invoices.Total) AS "Total"
+FROM employees
+JOIN customers on employees.EmployeeId = customers.SupportRepId
+JOIN invoices on customers.CustomerId = invoices.CustomerId
+WHERE invoices.InvoiceDate LIKE "2009%"
+GROUP BY employees.EmployeeId 
+ORDER BY Total DESC
+LIMIT 1;
+
+
+-- 9. ¿Cuáles son los 3 grupos que más han vendido?
+SELECT artists.Name AS "Artist", SUM(invoice_items.Quantity * invoice_items.UnitPrice) AS "Total"
+FROM artists
+JOIN albums on albums.ArtistId = artists.ArtistId
+JOIN tracks on tracks.AlbumId = albums.AlbumId
+JOIN invoice_items on tracks.TrackId = invoice_items.TrackId
+GROUP BY artists.Name
+ORDER BY Total DESC
+LIMIT 3;
