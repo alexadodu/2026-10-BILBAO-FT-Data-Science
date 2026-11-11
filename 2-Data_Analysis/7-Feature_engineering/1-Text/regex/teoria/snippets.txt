@@ -9,7 +9,7 @@
 
 ===== ANCHORS =====
 
-\b      - Word Boundary
+\b      - Word Boundary/límites entre palabras (espacios, tabuladores, nuevas líneas y caracteres no alfanuméricos)
 \B      - Not a Word Boundary
 ^       - Beginning of a String
 $       - End of a String
